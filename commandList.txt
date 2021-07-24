@@ -1,0 +1,25 @@
+npx create-nx-workspace nt-al
+
+npm install -g nx
+
+npm install --save-dev @nrwl/nest  @nrwl/angular
+
+nx g @nrwl/nest:app --help
+
+nx g @nrwl/nest:app api
+
+https://docs.nestjs.com/techniques/database#sequelize-integration
+
+npm install --save-dev sequelize-cli
+
+npx sequelize-cli migration:generate --name create-tasks-table
+
+npx sequelize-cli migration:create --name=create-table
+
+npx sequelize-cli db:migrate
+
+npm install -g @nestjs/cli
+
+https://docs.nestjs.com/techniques/validation#validation
+
+nx g @nrwl/workspace:library api-interfaces
