@@ -23,3 +23,5 @@ npm install -g @nestjs/cli
 https://docs.nestjs.com/techniques/validation#validation
 
 nx g @nrwl/workspace:library api-interfaces
+
+npm i --save-dev dotenv
