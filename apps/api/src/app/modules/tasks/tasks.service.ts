@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { ITask } from '@nt-al/api-interfaces';
 import { CreateTasksDto } from './dto/create-task.dto';
 import { Task } from './entities/task.entity';
 
@@ -7,7 +8,7 @@ import { Task } from './entities/task.entity';
 export class TasksService {
   constructor(@InjectModel(Task) private readonly taskModel: typeof Task) { }
 
-  async create({ description }: CreateTasksDto): Promise<Task> {
+  async create({ description }: CreateTasksDto): Promise<ITask> {
     try {
       const taskAlreadyExists = await this.taskModel.findOne({
         where: {
@@ -31,7 +32,7 @@ export class TasksService {
     }
   }
 
-  async findAll(): Promise<Task[]> {
+  async findAll(): Promise<ITask[]> {
     try {
       const tasks = await this.taskModel.findAll();
 
@@ -41,7 +42,7 @@ export class TasksService {
     }
   }
 
-  async findOne(id: number): Promise<Task> {
+  async findOne(id: number): Promise<ITask> {
     try {
       const task = await this.taskModel.findByPk(id);
 
