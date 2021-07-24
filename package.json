@@ -33,7 +33,7 @@
     "@nestjs/sequelize": "^8.0.0",
     "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~6.6.3",
+    "rxjs": "^7.1.15",
     "sequelize": "^6.6.5",
     "sequelize-typescript": "^2.1.0",
     "tslib": "^2.0.0"
