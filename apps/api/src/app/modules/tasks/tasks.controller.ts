@@ -1,33 +1,34 @@
 import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTasksDto } from './dto/create-task.dto';
+import { ITask } from '@nt-al/api-interfaces';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  create(@Body() createTaskDto: CreateTasksDto) {
+  async create(@Body() createTaskDto: CreateTasksDto): Promise<ITask> {
     return this.tasksService.create(createTaskDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<ITask[]> {
     return this.tasksService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<ITask> {
     return this.tasksService.findOne(+id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: CreateTasksDto) {
+  async update(@Param('id') id: string, @Body() updateTaskDto: CreateTasksDto) {
     return this.tasksService.update(+id, updateTaskDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.tasksService.remove(+id);
   }
 }
