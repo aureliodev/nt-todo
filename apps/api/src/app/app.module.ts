@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { AppService } from './app.service';
       define: {
         underscored: true
       }
-    })
+    }),
+    TasksModule
   ],
   controllers: [AppController],
   providers: [AppService],
