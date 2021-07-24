@@ -1,26 +1,97 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateTasksDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { Task } from './entities/task.entity';
 
 @Injectable()
 export class TasksService {
-  create(CreateTasksDto: CreateTasksDto) {
-    return 'This action adds a new task';
+  constructor(@InjectModel(Task) private readonly taskModel: typeof Task) { }
+
+  async create({ description }: CreateTasksDto): Promise<Task> {
+    try {
+      const taskAlreadyExists = await this.taskModel.findOne({
+        where: {
+          description
+        }
+      });
+
+      if (taskAlreadyExists) {
+        throw new HttpException({ message: 'Tarefa já cadastrada.' }, HttpStatus.BAD_REQUEST);
+      }
+
+      const task = await this.taskModel.create({ description })
+
+      return task;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException({ message: 'Erro ao cadastrar dados.' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAll(): Promise<Task[]> {
+    try {
+      const tasks = await this.taskModel.findAll();
+
+      return tasks;
+    } catch (error) {
+      throw new HttpException({ message: 'Erro ao obter dados.' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  async findOne(id: number): Promise<Task> {
+    try {
+      const task = await this.taskModel.findByPk(id);
+
+      if (!task) {
+        throw new HttpException({ message: 'Tafera não encontrada.' }, HttpStatus.NOT_FOUND);
+      }
+
+      return task;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException({ message: 'Erro ao obter dados.' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: number, dto: CreateTasksDto): Promise<void> {
+    try {
+      const task = await this.taskModel.findByPk(id);
+
+      if (!task) {
+        throw new HttpException({ message: 'Tarefa não encontrada.' }, HttpStatus.NOT_FOUND);
+      }
+
+      await this.taskModel.update(dto, { where: { id } })
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException({ message: 'Erro ao atualizar dados.' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number): Promise<void> {
+    try {
+      const task = await this.taskModel.findByPk(id);
+
+      if (!task) {
+        throw new HttpException({ message: 'Tarefa não encontrada.' }, HttpStatus.NOT_FOUND);
+      }
+
+      await this.taskModel.destroy({ where: { id } })
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException({ message: 'Erro ao remover dados.' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
