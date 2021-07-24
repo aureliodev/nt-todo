@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 import { Column, DataType, Table } from "sequelize-typescript";
-import { Status } from "@nt-al/api-interfaces"
+import { ITask, Status } from "@nt-al/api-interfaces"
 
 @Table({
   modelName: 'tasks',
@@ -8,7 +8,7 @@ import { Status } from "@nt-al/api-interfaces"
   paranoid: true,
   underscored: true
 })
-export class Task extends Model {
+export class Task extends Model implements ITask {
   @Column({
     autoIncrement: true,
     primaryKey: true
