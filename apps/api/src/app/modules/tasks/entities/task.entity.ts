@@ -10,6 +10,7 @@ import { Status } from "@nt-al/api-interfaces"
 })
 export class Task extends Model {
   @Column({
+    autoIncrement: true,
     primaryKey: true
   })
   id?: number;
