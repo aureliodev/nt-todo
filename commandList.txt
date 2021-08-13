@@ -37,3 +37,5 @@ nx generate @nrwl/angular:module task --routing
 nx generate @nrwl/angular:component task
 
 nx generate @nrwl/angular:service task
+
+npm install --save @angular/material @angular/cdk @angular/animations
