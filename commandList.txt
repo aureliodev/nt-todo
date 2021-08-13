@@ -38,4 +38,6 @@ nx generate @nrwl/angular:component task
 
 nx generate @nrwl/angular:service task
 
+https://v7.material.angular.io/guide/getting-started
+
 npm install --save @angular/material @angular/cdk @angular/animations
