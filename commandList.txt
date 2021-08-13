@@ -31,3 +31,7 @@ npm i --save-dev dotenv
 nx g @nrwl/angular:app front --backendProject=api
 
 fix "mini-css-extract-plugin": "2.2.0" on package.json
+
+nx generate @nrwl/angular:module task --routing
+
+nx generate @nrwl/angular:component task
