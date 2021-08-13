@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from './services/task.service';
+import { ITask } from '@nt-al/api-interfaces';
 
 @Component({
   selector: 'task',
@@ -7,7 +8,7 @@ import { TaskService } from './services/task.service';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {
-  tasks: any;
+  tasks: ITask[] | undefined;
   constructor(public service: TaskService) {}
 
   ngOnInit(): void {
